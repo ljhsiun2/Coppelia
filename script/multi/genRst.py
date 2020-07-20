@@ -3,7 +3,7 @@ import sys
 import argparse
 
 signals_except_1 = [
-        'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__delayed1_ex_dslot', 
+        'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__delayed1_ex_dslot',
         'top->__VlSymsp->TOP__or1200_cpu__or1200_except.ex_dslot'
         ]
 signals_except_2 = [
@@ -16,7 +16,7 @@ signals_except_4 = [
         'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__delayed_tee'
         ]
 signals_except_5 = [
-        'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__state', 
+        'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__state',
         'top->__VlSymsp->TOP__or1200_cpu__or1200_except.except_type'
         ]
 signals_except_6 = [
@@ -32,8 +32,8 @@ signals_mult_mac_1 = [
         'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__mul_stall_count'
         ]
 signals_mult_mac_2 = [
-        'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_free', 
-        'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_cntr', 
+        'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_free',
+        'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_cntr',
         'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_quot_r'
         ]
 signals_genpc_1 = [
@@ -62,12 +62,12 @@ signals_register = [
         'top->__VlSymsp->TOP__or1200_cpu__or1200_rf__rf_b.__PVT__mem[17]'
         ]
 
-fsm = [signals_except_1, signals_except_2, signals_except_3, 
-        signals_except_4, signals_except_5, signals_except_6, 
-        signals_except_7, signals_sprs, signals_mult_mac_1, 
-        signals_mult_mac_2, signals_genpc_1, signals_genpc_2, 
-        signals_freeze_1, signals_freeze_2, signals_ctrl, 
-        signals_operandmuxes_1, signals_operandmuxes_2, 
+fsm = [signals_except_1, signals_except_2, signals_except_3,
+        signals_except_4, signals_except_5, signals_except_6,
+        signals_except_7, signals_sprs, signals_mult_mac_1,
+        signals_mult_mac_2, signals_genpc_1, signals_genpc_2,
+        signals_freeze_1, signals_freeze_2, signals_ctrl,
+        signals_operandmuxes_1, signals_operandmuxes_2,
         signals_register]
 
 sim_signals_except_1 = ['delayed1_ex_dslot', 'ex_dslot']
@@ -108,6 +108,7 @@ def genrst(fsm_no, last_cycle, assert_list):
     testbench.write('#include "verilated.h"\n')
     testbench.write('#include <iostream>\n')
     testbench.write('#include <typeinfo>\n')
+    testbench.write('#include <klee/klee.h>\n')
 
     testbench.write('int main(int argc, char **argv) {\n')
     testbench.write('   Vor1200_cpu* top = new Vor1200_cpu;\n')
@@ -128,12 +129,12 @@ def genrst(fsm_no, last_cycle, assert_list):
     testbench.write('   top->clk = clk;\n')
     testbench.write('   top->eval();\n')
     testbench.write('\n')
-    
+
     testbench.write('   clk = !clk;\n')
     testbench.write('   top->clk = clk;\n')
     testbench.write('   top->eval();\n')
     testbench.write('\n')
-    
+
     testbench.write('   clk = !clk;\n')
     testbench.write('   top->clk = clk;\n')
     testbench.write('   top->eval();\n')
@@ -148,7 +149,7 @@ def genrst(fsm_no, last_cycle, assert_list):
 
     for i in fsm_no:
         for s in fsm[int(i)]:
-            testbench.write('   std::cout << (int)'+s+' << " ";\n') 
+            testbench.write('   std::cout << (int)'+s+' << " ";\n')
             lastfile.write('-1 ')
     for m in mk_list:
         for s in sim_fsm[int(m)]:
@@ -160,8 +161,8 @@ def genrst(fsm_no, last_cycle, assert_list):
             else:
                 lastfile.write('-1 ')
 
-    
-        
+
+
     testbench.write('\n')
     lastfile.write('\n')
 

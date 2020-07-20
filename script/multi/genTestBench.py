@@ -3,10 +3,10 @@ import sys
 import argparse
 import ctypes
 
-bug_no = 20 
+bug_no = 21
 
 full_signals_except_1 = [
-        'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__delayed1_ex_dslot', 
+        'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__delayed1_ex_dslot',
         'top->__VlSymsp->TOP__or1200_cpu__or1200_except.ex_dslot'
         ]
 full_signals_except_2 = [
@@ -19,7 +19,7 @@ full_signals_except_4 = [
         'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__delayed_tee'
         ]
 full_signals_except_5 = [
-        'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__state', 
+        'top->__VlSymsp->TOP__or1200_cpu__or1200_except.__PVT__state',
         'top->__VlSymsp->TOP__or1200_cpu__or1200_except.except_type'
         ]
 full_signals_except_6 = [
@@ -35,8 +35,8 @@ full_signals_mult_mac_1 = [
         'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__mul_stall_count'
         ]
 full_signals_mult_mac_2 = [
-        'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_free', 
-        'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_cntr', 
+        'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_free',
+        'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_cntr',
         'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_mult_mac__DOT__div_quot_r'
         ]
 full_signals_genpc_1 = [
@@ -61,16 +61,16 @@ full_signals_operandmuxes_2 = [
         'top->__VlSymsp->TOP__or1200_cpu.__PVT__or1200_operandmuxes__DOT__saved_b'
         ]
 full_signals_register = [
-        'top->__VlSymsp->TOP__or1200_cpu__or1200_rf__rf_a.__PVT__mem[16]', 
-        'top->__VlSymsp->TOP__or1200_cpu__or1200_rf__rf_b.__PVT__mem[17]' 
+        'top->__VlSymsp->TOP__or1200_cpu__or1200_rf__rf_a.__PVT__mem[16]',
+        'top->__VlSymsp->TOP__or1200_cpu__or1200_rf__rf_b.__PVT__mem[17]'
         ]
 
-full_fsm = [full_signals_except_1, full_signals_except_2, full_signals_except_3, 
-        full_signals_except_4, full_signals_except_5, full_signals_except_6, 
-        full_signals_except_7, full_signals_sprs, full_signals_mult_mac_1, 
-        full_signals_mult_mac_2, full_signals_genpc_1, full_signals_genpc_2, 
-        full_signals_freeze_1, full_signals_freeze_2, full_signals_ctrl, 
-        full_signals_operandmuxes_1, full_signals_operandmuxes_2, 
+full_fsm = [full_signals_except_1, full_signals_except_2, full_signals_except_3,
+        full_signals_except_4, full_signals_except_5, full_signals_except_6,
+        full_signals_except_7, full_signals_sprs, full_signals_mult_mac_1,
+        full_signals_mult_mac_2, full_signals_genpc_1, full_signals_genpc_2,
+        full_signals_freeze_1, full_signals_freeze_2, full_signals_ctrl,
+        full_signals_operandmuxes_1, full_signals_operandmuxes_2,
         full_signals_register]
 
 signals_except_1 = ['delayed1_ex_dslot', 'ex_dslot']
@@ -78,7 +78,7 @@ signals_except_2 = ['wb_pc']
 signals_except_3 = ['delayed_iee']
 signals_except_4 = ['delayed_tee']
 signals_except_5 = ['state', 'except_type']
-signals_except_6 = ['ex_freeze_prev'] 
+signals_except_6 = ['ex_freeze_prev']
 signals_except_7 = ['trace_trap']
 signals_sprs = ['sr_reg_bit_eph_select']
 signals_mult_mac_1 = ['mul_stall_count']
@@ -87,56 +87,56 @@ signals_genpc_1 = ['wait_lsu']
 signals_genpc_2 = ['pcreg_select']
 signals_freeze_1 = ['multicycle_cnt']
 signals_freeze_2 = ['waiting_on']
-signals_ctrl = ['sp_return_counter'] 
+signals_ctrl = ['sp_return_counter']
 signals_operandmuxes_1 = ['saved_a']
 signals_operandmuxes_2 = ['saved_b']
 signals_register = ['r1', 'r2']
 
- 
-fsm = [signals_except_1, signals_except_2, signals_except_3, 
-        signals_except_4, signals_except_5, signals_except_6, 
-        signals_except_7, signals_sprs, signals_mult_mac_1, 
-        signals_mult_mac_2, signals_genpc_1, signals_genpc_2, 
-        signals_freeze_1, signals_freeze_2, signals_ctrl, 
+
+fsm = [signals_except_1, signals_except_2, signals_except_3,
+        signals_except_4, signals_except_5, signals_except_6,
+        signals_except_7, signals_sprs, signals_mult_mac_1,
+        signals_mult_mac_2, signals_genpc_1, signals_genpc_2,
+        signals_freeze_1, signals_freeze_2, signals_ctrl,
         signals_operandmuxes_1, signals_operandmuxes_2, signals_register]
 
 range_fsm_end = [
-        '& (delayed1_ex_dslot <= 1) & (ex_dslot)); \n', 
+        '& (delayed1_ex_dslot <= 1) & (ex_dslot)); \n',
         '); \n', # wb_pc
         '); \n', # delayed_iee
         '); \n', # delayed_tee
         '& (state <= 7) & (except_type <= 15)); \n',
-        '& (ex_freeze_prev <= 1)); \n', 
+        '& (ex_freeze_prev <= 1)); \n',
         '& (trace_trap <= 1)); \n',
         '& (sr_reg_bit_eph_select <= 1)); \n',
-        '& (mul_stall_count <= 3)); \n', 
+        '& (mul_stall_count <= 3)); \n',
         '& (div_free <= 1) & (div_cntr <= 63)); \n',
-        '& (wait_lsu <= 1)); \n', 
+        '& (wait_lsu <= 1)); \n',
         '& (pcreg_select <= 1)); \n',
-        '& (multicycle_cnt <= 7)); \n', 
+        '& (multicycle_cnt <= 7)); \n',
         '& (waiting_on <= 3)); \n',
-        '& (sp_return_counter <= 50)); \n', 
+        '& (sp_return_counter <= 50)); \n',
         '& (saved_a <= 1)); \n',
         '& (saved_b <= 1)); \n',
         '); \n' # r1
         ]
 
 range_fsm_middle = [
-        '& (delayed1_ex_dslot <= 1) & (ex_dslot) \n', 
+        '& (delayed1_ex_dslot <= 1) & (ex_dslot) \n',
         '', # wb_pc
         '', # delayed_iee
         '', # delayed_tee
         '& (state <= 7) & (except_type <= 15) \n',
-        '& (ex_freeze_prev <= 1) \n', 
+        '& (ex_freeze_prev <= 1) \n',
         '& (trace_trap <= 1) \n',
         '& (sr_reg_bit_eph_select <= 1) \n',
-        '& (mul_stall_count <= 3) \n', 
+        '& (mul_stall_count <= 3) \n',
         '& (div_free <= 1) & (div_cntr <= 63) \n',
-        '& (wait_lsu <= 1) \n', 
+        '& (wait_lsu <= 1) \n',
         '& (pcreg_select <= 1) \n',
-        '& (multicycle_cnt <= 7) \n', 
+        '& (multicycle_cnt <= 7) \n',
         '& (waiting_on <= 3) \n',
-        '& (sp_return_counter <= 50) \n', 
+        '& (sp_return_counter <= 50) \n',
         '& (saved_a <= 1) \n',
         '& (saved_b <= 1) \n',
         '' # r1
@@ -212,7 +212,8 @@ def gentb(fsm_no, last_cycle, assert_list):
         for m in fsm:
             if a in m:
                 ind = fsm.index(m)
-                mk_list.append(ind)
+                if ind not in mk_list:
+                    mk_list.append(ind)
 
     for i in fsm_no:
         if (i != fsm_no[-1]):
@@ -235,7 +236,7 @@ def gentb(fsm_no, last_cycle, assert_list):
         testbench.write('(sig_int <= 1) & (sig_tick <= 1)\n')
     else:
         testbench.write('(sig_int <= 1) & (sig_tick <= 1));\n')
-  
+
     already_end = 0
     for i in fsm_no:
         if (i == fsm_no[-1]):
@@ -243,6 +244,7 @@ def gentb(fsm_no, last_cycle, assert_list):
             already_end = 1
         else:
             testbench.write(range_fsm_middle[int(i)])
+    print "@@@@@@@@@@@@@@@@@@@@ ",  mk_list
     for m in mk_list:
         if (m == mk_list[-1]):
             if (already_end == 0):
@@ -312,13 +314,13 @@ def gentb(fsm_no, last_cycle, assert_list):
     testbench.write('   top->eval();\n')
     testbench.write('\n')
 
-    
+
     if (last_cycle == 1):
         testbench.write('   clk = !clk;\n')
         testbench.write('   top->clk = clk;\n')
         testbench.write('   top->eval();\n')
         testbench.write('\n')
-    
+
         testbench.write('   clk = !clk;\n')
         testbench.write('   top->clk = clk;\n')
         testbench.write('   top->eval();\n')
@@ -329,14 +331,14 @@ def gentb(fsm_no, last_cycle, assert_list):
             testbench.write('if (((top->__VlSymsp->TOP__or1200_cpu__or1200_ctrl.ex_insn & 4292870144) >> 21 == 1826) && \n')
             testbench.write('   (top->__VlSymsp->TOP__or1200_cpu.__PVT__operand_a > top->__VlSymsp->TOP__or1200_cpu.__PVT__operand_b) && \n')
             testbench.write('   (((top->__VlSymsp->TOP__or1200_cpu__or1200_sprs.__PVT__to_sr >> 9) & 1) != 1)) \n')
-            testbench.write('   klee_assert(0);\n')
+            testbench.write('   klee_assert(1);\n')
             testbench.write('\n')
         elif (bug_no == 21):
             #=== b07 ===#
             testbench.write('if (((top->__VlSymsp->TOP__or1200_cpu__or1200_ctrl.ex_insn & 4292870144) >> 21 == 1829) && \n')
-            testbench.write('(top->__VlSymsp->TOP__or1200_cpu.__PVT__operand_a <= top->__VlSymsp->TOP__or1200_cpu.__PVT__operand_b) && \n')
-            testbench.write('(((top->__VlSymsp->TOP__or1200_cpu__or1200_sprs.__PVT__to_sr >> 9) & 1) == 0)) \n')
-            testbench.write('klee_assert(0); \n')
+            testbench.write('   (top->__VlSymsp->TOP__or1200_cpu.__PVT__operand_a <= top->__VlSymsp->TOP__or1200_cpu.__PVT__operand_b) && \n')
+            testbench.write('   (((top->__VlSymsp->TOP__or1200_cpu__or1200_sprs.__PVT__to_sr >> 9) & 1) == 0)) \n')
+            testbench.write('   klee_assert(0); \n')
     else:
         print assert_list
         if ((len(assert_list) == 2) and (assert_list[0] == "r1")):

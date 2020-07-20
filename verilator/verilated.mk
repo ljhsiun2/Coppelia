@@ -20,8 +20,8 @@ RANLIB = ranlib
 CFG_WITH_CCWARN = no
 CFG_WITH_LONGTESTS = no
 
-KLEE_ROOT = /playpen/rzhang/Klee/klee
-KLEE_INCLUDE = /playpen/rzhang/Klee/klee/include
+KLEE_ROOT = /home/lucash/projects/Coppelia/klee
+KLEE_INCLUDE = /home/lucash/projects/Coppelia/klee/include
 
 # Compiler flags to use to turn off unused and generated code warnings, such as -Wno-div-by-zero
 CFG_CXXFLAGS_NO_UNUSED =  -Wno-char-subscripts -Wno-parentheses-equality -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable
@@ -86,8 +86,8 @@ LDFLAGS  += $(VM_USER_LDFLAGS)
 LDLIBS   += $(VM_USER_LDLIBS)
 
 # For klee
-#CPPFLAGS += -Wl,-rpath=$(KLEE_ROOT)/Release+Asserts/lib -lkleeRunTest
-#CPPFLAGS += -lkleeRunTest
+CPPFLAGS += -Wl,-rpath=$(KLEE_ROOT)/build/Release+Asserts/lib -lkleeRunTest
+CPPFLAGS += -lkleeRunTest
 
 # See the benchmarking section of bin/verilator.
 # Support class optimizations.  This includes the tracing and symbol table.
@@ -140,7 +140,8 @@ endif
 ##### C/H builds
 
 LIBS   += -lm -lstdc++ 
-LIBS   += -L$(KLEE_ROOT)/Release+Asserts/lib -lkleeRuntest 
+LIBS   += -L$(KLEE_ROOT)/build/lib
+LIBS   += -L$(KLEE_ROOT)/build/Release+Asserts/lib -lkleeRuntest 
 
 #######################################################################
 # Overall Objects Linking

@@ -11,5 +11,5 @@ make -j -C obj_dir/ -f Vor1200_cpu.mk Vor1200_cpu
 
 extract-bc -l llvm-link obj_dir/Vor1200_cpu
 
-klee -emit-all-errors -coi-prune=true -halt-when-fired=true --search=hardware --libc=uclibc --posix-runtime obj_dir/Vor1200_cpu.bc
+klee -emit-all-errors --libc=uclibc --posix-runtime obj_dir/Vor1200_cpu.bc
 
