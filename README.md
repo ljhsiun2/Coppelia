@@ -16,7 +16,7 @@ git submodule update --init --recursive
 
 ## Installation
 ### Klee
-Please refer to website: [http://klee.github.io/releases/docs/v1.3.0/build-llvm34/](http://klee.github.io/releases/docs/v1.3.0/build-llvm34/) about 
+Please refer to website: [https://klee.github.io/build-llvm9/](https://klee.github.io/build-llvm9/) about 
 how to build KLEE.
 
 ### Verilator
@@ -46,3 +46,22 @@ mv /usr/local/share/verilator/include/verilated.mk /usr/local/share/verilator/in
 cp verilator/verilated.mk /usr/local/share/verilator/include
 ```
 
+## Usage
+### Directory Structure
+
+```
+.
++-- cores/              # Verilog source
+|   +-- or1200/
+|   include/            # Basic global defines and contraints using klee_assume
+|   one_cycle/          # Testbench for described single-cycle methodology
+|   script/              
+|   +-- multi.py        # wrapper invoking necessary klee API and file parsing
+|   +-- multi/          
+|       +-- dissassembler
+|       +-- *.py        # python files for generating testbenches (e.g. reset) 
+|   +-- tb_cpu.cpp
+|   +-- tb_reset.cpp
+```
+
+Invoking multi.py to run Coppelia off of the source RTL under $COPPELIA_ROOT/cores
