@@ -244,7 +244,6 @@ def gentb(fsm_no, last_cycle, assert_list):
             already_end = 1
         else:
             testbench.write(range_fsm_middle[int(i)])
-    print "@@@@@@@@@@@@@@@@@@@@ ",  mk_list
     for m in mk_list:
         if (m == mk_list[-1]):
             if (already_end == 0):
